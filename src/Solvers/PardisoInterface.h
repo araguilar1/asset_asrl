@@ -1046,9 +1046,13 @@ namespace Eigen {
           }
 
           // Solve L*D*L^T * x = b
-          ldl_lsolve(m_n, &b[0], &m_Lp[0], &m_Li[0], &m_Lx[0]);
-          ldl_dsolve(m_n, &b[0], &m_D[0]);
-          ldl_ltsolve(m_n, &b[0], &m_Lp[0], &m_Li[0], &m_Lx[0]);
+          // const_cast is safe: LDL solve routines only read (not write) the
+          // factorization arrays (Lp, Li, Lx, D). The C API lacks const qualifiers.
+          ldl_lsolve(m_n, &b[0], const_cast<int*>(&m_Lp[0]),
+                     const_cast<int*>(&m_Li[0]), const_cast<double*>(&m_Lx[0]));
+          ldl_dsolve(m_n, &b[0], const_cast<double*>(&m_D[0]));
+          ldl_ltsolve(m_n, &b[0], const_cast<int*>(&m_Lp[0]),
+                      const_cast<int*>(&m_Li[0]), const_cast<double*>(&m_Lx[0]));
 
           // Inverse permute solution
           for (int i = 0; i < m_n; i++) {
