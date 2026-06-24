@@ -1,0 +1,77 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "x64-clang-release",
+      "displayName": "x64 Clang Release",
+      "description": "Windows x64 release build using clang-cl and Ninja",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "$env{CONDA_PREFIX}",
+        "rhs": ""
+      },
+      "environment": {
+        "ONEAPI_ROOT": "C:/Program Files (x86)/Intel/oneAPI"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_FLAGS_RELEASE": "/MD /O2 /Ob2 /DNDEBUG /arch:AVX2 /fp:fast /GS- /Gw",
+        "CMAKE_C_COMPILER": {
+          "type": "FILEPATH",
+          "value": "C:/Program Files/LLVM/bin/clang-cl.exe"
+        },
+        "CMAKE_C_COMPILER_AR": {
+          "type": "FILEPATH",
+          "value": "C:/Program Files/LLVM/bin/llvm-ar.exe"
+        },
+        "CMAKE_C_COMPILER_RANLIB": {
+          "type": "FILEPATH",
+          "value": "C:/Program Files/LLVM/bin/llvm-ranlib.exe"
+        },
+        "CMAKE_CXX_COMPILER": {
+          "type": "FILEPATH",
+          "value": "C:/Program Files/LLVM/bin/clang-cl.exe"
+        },
+        "CMAKE_CXX_COMPILER_AR": {
+          "type": "FILEPATH",
+          "value": "C:/Program Files/LLVM/bin/llvm-ar.exe"
+        },
+        "CMAKE_CXX_COMPILER_RANLIB": {
+          "type": "FILEPATH",
+          "value": "C:/Program Files/LLVM/bin/llvm-ranlib.exe"
+        },
+        "CMAKE_LINKER": {
+          "type": "FILEPATH",
+          "value": "C:/Program Files/LLVM/bin/lld-link.exe"
+        },
+        "Python_FIND_REGISTRY": "NEVER",
+        "Python_ROOT_DIR": {
+          "type": "PATH",
+          "value": "$env{CONDA_PREFIX}"
+        }
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "inheritEnvironments": ["clang_cl_x64"],
+          "intelliSenseMode": "windows-clang-x64"
+        }
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "x64-clang-release",
+      "configurePreset": "x64-clang-release",
+      "jobs": 8,
+      "verbose": true
+    }
+  ]
+}

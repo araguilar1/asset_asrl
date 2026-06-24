@@ -35,10 +35,10 @@ endif()
 ################################################################################
 
 
-set(LINK_TIME_OPT FALSE)          ### DO LTO - Recommended for full release
-set(CLANG_MAX_INLINE_DEPTH 225)
+set(LINK_TIME_OPT TRUE)          ### DO LTO - Recommended for full release
+set(CLANG_MAX_INLINE_DEPTH 500)
 #set(BUILD_ASSET_WHEEL TRUE)      ### CI Build for generic wheels
-#set(BUILD_SPHINX_DOCS TRUE)      
+set(BUILD_SPHINX_DOCS FALSE)      
 
 
 ################################################################################
@@ -261,6 +261,14 @@ endif()
 find_package(MKL REQUIRED)
 
 find_package(Python ${PYVERSION_EXACT} REQUIRED COMPONENTS Interpreter Development)
+
+# Bridge modern find_package(Python) results to the legacy PYTHON_* name still
+# consumed below (and by pypiwheel). This lets a plain `cmake -B build` with an
+# active environment work without a preset injecting it. A preset (or -D flag)
+# that already sets PYTHON_EXECUTABLE takes precedence.
+if(NOT PYTHON_EXECUTABLE)
+  set(PYTHON_EXECUTABLE ${Python_EXECUTABLE})
+endif()
 
 # Set dependency variables
 set(INCLUDE_DIRS ${PYBIND11_INCLUDE_DIR} ${PYTHON_INCLUDE_DIRS} ${MKL_INCLUDE_DIRS})
