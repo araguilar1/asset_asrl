@@ -13,6 +13,11 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "$env{CONDA_PREFIX}",
+        "rhs": ""
+      },
       "environment": {
         "ONEAPI_ROOT": "C:/Program Files (x86)/Intel/oneAPI"
       },
@@ -47,35 +52,10 @@
           "type": "FILEPATH",
           "value": "C:/Program Files/LLVM/bin/lld-link.exe"
         },
-        "PYTHON_EXECUTABLE": {
-          "type": "FILEPATH",
-          "value": "C:/Users/abram/miniconda3/envs/asset_py312_env/python.exe"
-        },
-        "PYTHON_INCLUDE_DIR": {
-          "type": "PATH",
-          "value": "C:/Users/abram/miniconda3/envs/asset_py312_env/include"
-        },
-        "PYTHON_LIBRARY": {
-          "type": "FILEPATH",
-          "value": "C:/Users/abram/miniconda3/envs/asset_py312_env/libs/python312.lib"
-        },
-        "PYVERSION_EXACT": "3.12",
         "Python_FIND_REGISTRY": "NEVER",
         "Python_ROOT_DIR": {
           "type": "PATH",
-          "value": "C:/Users/abram/miniconda3/envs/asset_py312_env"
-        },
-        "Python_EXECUTABLE": {
-          "type": "FILEPATH",
-          "value": "C:/Users/abram/miniconda3/envs/asset_py312_env/python.exe"
-        },
-        "Python_INCLUDE_DIR": {
-          "type": "PATH",
-          "value": "C:/Users/abram/miniconda3/envs/asset_py312_env/include"
-        },
-        "Python_LIBRARY": {
-          "type": "FILEPATH",
-          "value": "C:/Users/abram/miniconda3/envs/asset_py312_env/libs/python312.lib"
+          "value": "$env{CONDA_PREFIX}"
         }
       },
       "vendor": {
